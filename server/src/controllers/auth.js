@@ -1,14 +1,13 @@
-import { Request, Response } from "express";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import prisma from "../prisma/client";
-import dotenv from "dotenv";
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const prisma = require("../prisma/client");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
-const SECRET_KEY = process.env.JWT_SECRET as string;
+const SECRET_KEY = process.env.JWT_SECRET;
 
-export const signup = async (req: Request, res: Response): Promise<Response | void> => {
+exports.signup = async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
@@ -30,7 +29,7 @@ export const signup = async (req: Request, res: Response): Promise<Response | vo
     }
 };
 
-export const login = async (req: Request, res: Response): Promise<Response | void> => {
+exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
