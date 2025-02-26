@@ -9,9 +9,73 @@ datasource db {
 }
 
 model User {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  password    String
+  bio         String?  // Optional bio for the user
+  avatarUrl   String?  // Profile picture
+  createdAt   DateTime @default(now())
+  posts       Post[]
+  projects    Project[]
+  socialLinks SocialLink[]
+  experiences Experience[]
+}
+
+model Post {
+  id          String   @id @default(uuid())
+  title       String
+  content     String
+  published   Boolean  @default(false)
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+
+  @@index([authorId]) // Manually adding an index for better query performance
+}
+
+model Project {
+  id           String   @id @default(uuid())
+  title        String
+  description  String
+  repoUrl      String?  // GitHub or GitLab repo link
+  liveUrl      String?  // Deployed project link
+  technologies String[]
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+
+  @@index([userId]) // Index for efficient querying
+}
+
+model Skill {
+  id          String  @id @default(uuid())
+  name        String
+  proficiency Int     @default(0) // 0-100 scale
+  createdAt   DateTime @default(now())
+}
+
+
+model SocialLink {
   id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  password String
-  createdAt DateTime @default(now())
+  platform String // Example: "LinkedIn", "GitHub", "Twitter"
+  url      String
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId]) // Index for quick filtering
+}
+
+model Experience {
+  id          String   @id @default(uuid())
+  company     String
+  position    String
+  startDate   DateTime
+  endDate     DateTime?
+  description String?
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId]) // Index for improved query performance
 }
