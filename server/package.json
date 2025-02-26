@@ -1,7 +1,8 @@
 {
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "type": "module",
+  "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js"
@@ -11,6 +12,7 @@
   "dependencies": {
     "@prisma/client": "^6.4.1",
     "@prisma/extension-pulse": "1.2.0",
+    "@supabase/supabase-js": "^2.49.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -20,6 +22,7 @@
     "socket.io": "4.8.1"
   },
   "devDependencies": {
+    "nodemon": "^3.1.9",
     "prisma": "^6.4.1"
   }
 }
